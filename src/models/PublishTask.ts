@@ -2,19 +2,19 @@ import { Entity, PrimaryColumn, Column, CreateDateColumn } from "typeorm";
 
 @Entity("publish_tasks")
 export class PublishTask {
-  @PrimaryColumn()
+  @PrimaryColumn("varchar")
   id!: string;
 
-  @Column()
+  @Column("varchar")
   chapterId!: string;
 
-  @Column()
+  @Column("varchar")
   novelId!: string;
 
   @Column({ type: "datetime" })
   scheduledTime!: Date;
 
-  @Column({ default: "pending" })
+  @Column("varchar", { default: "pending" })
   status!: "pending" | "processing" | "completed" | "failed";
 
   @Column("text", { nullable: true })

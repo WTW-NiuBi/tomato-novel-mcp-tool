@@ -35,6 +35,9 @@ importers:
       puppeteer:
         specifier: ^21.11.0
         version: 21.11.0(typescript@5.9.3)
+      reflect-metadata:
+        specifier: ^0.2.2
+        version: 0.2.2
       typeorm:
         specifier: ^0.3.17
         version: 0.3.28(better-sqlite3@9.6.0)(ioredis@5.9.1)

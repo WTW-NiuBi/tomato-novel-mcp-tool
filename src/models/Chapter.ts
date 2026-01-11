@@ -11,29 +11,29 @@ import { Novel } from "./Novel.js";
 
 @Entity("chapters")
 export class Chapter {
-  @PrimaryColumn()
+  @PrimaryColumn("varchar")
   id!: string;
 
-  @Column()
+  @Column("varchar")
   novelId!: string;
 
   @ManyToOne(() => Novel, (novel) => novel.chapters)
   @JoinColumn({ name: "novelId" })
   novel!: Novel;
 
-  @Column()
+  @Column("varchar")
   title!: string;
 
   @Column("text")
   content!: string;
 
-  @Column({ nullable: true })
+  @Column("integer", { nullable: true })
   wordCount?: number;
 
-  @Column({ nullable: true })
+  @Column("integer", { nullable: true })
   chapterNumber?: number;
 
-  @Column({ default: "draft" })
+  @Column("varchar", { default: "draft" })
   status!: "draft" | "checked" | "published";
 
   @Column("float", { nullable: true })
