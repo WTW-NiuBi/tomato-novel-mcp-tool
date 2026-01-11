@@ -28,13 +28,21 @@ export class AIService {
     prompt: string,
     model: "openai" | "anthropic" = "openai"
   ): Promise<GenerateContentResult> {
+    // 如果指定的模型可用，使用它
     if (model === "openai" && this.openai) {
       return await this.generateWithOpenAI(prompt);
     } else if (model === "anthropic" && this.anthropic) {
       return await this.generateWithAnthropic(prompt);
-    } else {
-      throw new Error(`AI service not available for model: ${model}`);
     }
+    
+    // 如果指定的模型不可用，尝试使用另一个可用的模型
+    if (this.anthropic) {
+      return await this.generateWithAnthropic(prompt);
+    } else if (this.openai) {
+      return await this.generateWithOpenAI(prompt);
+    }
+    
+    throw new Error("No AI service available. Please configure OPENAI_API_KEY or ANTHROPIC_API_KEY");
   }
 
   private async generateWithOpenAI(prompt: string): Promise<GenerateContentResult> {

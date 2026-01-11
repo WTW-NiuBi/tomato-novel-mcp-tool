@@ -53,14 +53,43 @@ npm run dev
 
 ### 5. 配置Cursor
 
-在Cursor的MCP配置文件中添加：
+**详细配置指南请查看：[CURSOR_MCP配置指南.md](./CURSOR_MCP配置指南.md)**
+
+#### 方法1：使用自动配置脚本（推荐）
+
+在PowerShell中运行：
+
+```powershell
+# 生产环境配置（使用编译后的代码）
+.\setup-cursor-mcp.ps1 -ProjectPath "E:\codes\novel-mcp" -Mode "production"
+
+# 开发环境配置（直接运行TypeScript）
+.\setup-cursor-mcp.ps1 -ProjectPath "E:\codes\novel-mcp" -Mode "development"
+```
+
+脚本会自动：
+- 找到Cursor配置文件位置
+- 创建配置（如果不存在）
+- 添加MCP服务器配置
+- 保存配置
+
+#### 方法2：手动配置
+
+1. **找到Cursor的MCP配置文件**：
+   - Windows: `%APPDATA%\Cursor\User\globalStorage\rooveterinaryinc.roo-cline\settings\cline_mcp_settings.json`
+   - macOS: `~/Library/Application Support/Cursor/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`
+   - Linux: `~/.config/Cursor/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`
+
+2. **添加配置**（使用绝对路径，替换为你的实际路径）：
 
 ```json
 {
   "mcpServers": {
     "tomato-novel": {
       "command": "node",
-      "args": ["./dist/index.js"],
+      "args": [
+        "E:\\codes\\novel-mcp\\dist\\index.js"
+      ],
       "env": {
         "NODE_ENV": "production"
       }
@@ -68,6 +97,14 @@ npm run dev
   }
 }
 ```
+
+3. **重启Cursor**使配置生效
+
+**注意**：
+- 确保项目已构建（运行 `pnpm build`）
+- 路径使用绝对路径（替换 `E:\\codes\\novel-mcp` 为你的实际路径）
+- 如果使用 `.env` 文件，`env` 字段可以省略
+- 参考 `cursor-mcp-config.example.json` 查看配置示例
 
 ## 项目结构
 
